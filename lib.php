@@ -6,12 +6,13 @@ function createTable($committee) {
 	//Connect to the MySQL database using a mysqli object
 	$mysqli = new mysqli(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_DB);
 	//If there was an error, kill the script
-	if ($mysqli->conect_error) {
+	if ($mysqli->connect_error) {
 		die ("Connection Error: ".$mysqli->connect_error."<br/>");
 	}
 	
 	//Form the query to select all entries for the given $committee
-	$query = "SELECT * FROM ".SPENDING_TABLE." WHERE `committee` = `".$committee."`";
+	$query = "SELECT * FROM ".SPENDING_TABLE." WHERE committee='".$committee."'";
+	echo $query."<br/>";
 	
 	//Make the query
 	$result = $mysqli->query($query);
