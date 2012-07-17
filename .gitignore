@@ -1,0 +1,5 @@
+#Files to Ignore
+.project
+.buildpath
+.settings/*
+mysql_vars.php
