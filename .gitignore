@@ -3,3 +3,4 @@
 .buildpath
 .settings/*
 mysql_vars.php
+.DS_Store
