@@ -55,14 +55,21 @@ function createTable($committee)
 		//Form an html string containing the table
 		$html = "<table class='committee'>";
 		//Create the table headers
-		$html .= "<tr><th>Date</th><th>Item</th><th>Purchaser</th><th>Merchant</th><th>Amount</th></tr>";
+		$html .= "<tr><th>Date</th><th>Item</th><th>Person</th>";
+		if ($committee != "donations") {
+			$html .= "<th>Merchant</th>";
+		}
+		$html .= "<th>Amount</th></tr>";
+		
 		//Loop through each row in the $result
 		while($row = $result->fetch_assoc()) {
 			//Add a row to the table
 			$html .= "<tr><td>".$row["date"]."</td>";
 			$html .= "<td>".$row["item"]."</td>";
 			$html .= "<td>".$row["purchaser"]."</td>";
-			$html .= "<td>".$row["merchant"]."</td>";
+			if ($committee != "donations") {
+				$html .= "<td>".$row["merchant"]."</td>";
+			}
 			$html .= "<td>".$row["amount"]."</td></tr>";
 		}
 		//Close the table
@@ -88,7 +95,7 @@ function getTotal($committee=null)
 	
 	//If $committee is null, query for the total budget spent
 	if ($committee == null) {
-		$query = "SELECT SUM(amount) as total FROM ".SPENDING_TABLE;
+		$query = "SELECT SUM(amount) as total FROM ".SPENDING_TABLE." WHERE committee!='donations'";
 	} 
 	//If $committee is set, query for the total spent by a committee
 	else {
