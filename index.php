@@ -19,32 +19,54 @@ $percent = 0;
    	 	google.load('visualization', '1.0', {'packages':['corechart']});
     
    		// Set a callback to run when the Google Visualization API is loaded.
-    	google.setOnLoadCallback(drawBudgetChart);
+    	google.setOnLoadCallback(drawCharts);
 
     	// Callback funtion to create the spending chart
-    	function drawBudgetChart() {
-        	//Create a new data table for the chart
-    		var data = new google.visualization.DataTable();
+    	function drawCharts() {
+        	//Create a new data table for the totals chart
+    		var totalsData = new google.visualization.DataTable();
     		//Add two columns of data: one for committee, one for budget
-    		data.addColumn('string', 'Committee');
-    		data.addColumn('number', 'Budget');
+    		totalsData.addColumn('string', 'Committee');
+    		totalsData.addColumn('number', 'Budget');
 			//Add the data rows to the table
-    		data.addRows([
-				['OpComm', <?php echo round(YEARLY_TOTAL*BUDGET_OPCOMM);?>],
-				['Evals', <?php echo YEARLY_TOTAL*BUDGET_EVALS;?>],
-				['History', <?php echo YEARLY_TOTAL*BUDGET_HISTORY;?>],
-				['Imps', <?php echo YEARLY_TOTAL*BUDGET_IMPS;?>],
-				['R&D', <?php echo YEARLY_TOTAL*BUDGET_RANDD;?>],
-				['Social', <?php echo YEARLY_TOTAL*BUDGET_SOCIAL;?>],
-				['Misc', <?php echo YEARLY_TOTAL*BUDGET_MISC;?>],
-				['Accum', <?php echo YEARLY_TOTAL*BUDGET_ACCUM;?>]
+    		totalsData.addRows([
+				['OpComm', <?php echo round(YEARLY_TOTAL*BUDGET_OPCOMM,2);?>],
+				['Evals', <?php echo round(YEARLY_TOTAL*BUDGET_EVALS,2);?>],
+				['History', <?php echo round(YEARLY_TOTAL*BUDGET_HISTORY,2);?>],
+				['Imps', <?php echo round(YEARLY_TOTAL*BUDGET_IMPS,2);?>],
+				['R&D', <?php echo round(YEARLY_TOTAL*BUDGET_RANDD,2);?>],
+				['Social', <?php echo round(YEARLY_TOTAL*BUDGET_SOCIAL,2);?>],
+				['Misc', <?php echo round(YEARLY_TOTAL*BUDGET_MISC,2);?>],
+				['Accum', <?php echo round(YEARLY_TOTAL*BUDGET_ACCUM,2);?>]
       		]);
-			//Set the options for the chart
-      		var options = {'title':'Budget Breakdown by Committee', 'width':500, 'height':300};
+			//Set the options for the totals chart
+      		var totalsOptions = {'title':'Budget Breakdown by Committee', 'width':390, 'height':260};
       		//Create a new chart
-      		var chart = new google.visualization.PieChart(document.getElementById('budget-chart'));
+      		var totalsChart = new google.visualization.PieChart(document.getElementById('totals-chart'));
       		//Draw the chart
-      		chart.draw(data, options);
+      		totalsChart.draw(totalsData, totalsOptions);
+
+      		//Create a new data table for the spending chart
+      		var spendingData = new google.visualization.DataTable();
+      		//Add two columns of data: one for committee, one for budget
+      		spendingData.addColumn('string', 'Committee');
+      		spendingData.addColumn('number', 'Budget');
+      		//Add the data rows to the table
+      		spendingData.addRows([
+				['OpComm', <?php echo round(getTotal('opcomm'),2); ?>],
+				['Evals', <?php echo round(getTotal('evals'),2); ?>],
+				['History', <?php echo round(getTotal('history'),2); ?>],
+				['Imps', <?php echo round(getTotal('imps'),2); ?>],
+				['R&D', <?php echo round(getTotal('randd'),2); ?>],
+				['Social', <?php echo round(getTotal('social'),2); ?>],
+				['Misc', <?php echo round(getTotal('misc'),2); ?>]
+      		]);
+      		//Set the options for the spending chart
+      		var spendingOptions = {'title':'Spending Breakdown by Committee', 'width':390, 'height':260};
+      		//Create a new chart
+      		var spendingChart = new google.visualization.PieChart(document.getElementById('spending-chart'));
+      		//Draw the chart
+      		spendingChart.draw(spendingData, spendingOptions);
     	}
 	</script>
 </head>
@@ -54,8 +76,9 @@ $percent = 0;
 		<h1>CSH Spending - 2012</h1>
 	</header>
 	<section> 
-		<h2>Budget Breakdown</h2>
-		<div id="budget-chart"></div>
+		<div id="totals-chart" class="chart"></div>
+		<div id="spending-chart" class="chart"></div>
+		<br class="clear"/>
 		<!-- <table>
 			<tr><td>Yearly On-Floor Dues: </td><td>$<?php //echo YEARLY_TOTAL;?></td></tr>
 			<tr><td>OpComm: </td><td>$<?php //echo round(YEARLY_TOTAL*BUDGET_OPCOMM);?></td></tr>
@@ -70,7 +93,7 @@ $percent = 0;
 	</section>
 	<section>
 		<h2>Totals</h2>
-		<table>
+		<table id="totals">
 		<tr><td><b>Starting Budget (Yearly On-Floor Dues): </b></td><td>$<?php echo YEARLY_TOTAL;?></td></tr>
 		<tr><td><b>Total Donations (User Rack, Off-Floor Dues, etc.): </b></td><td>$<?php $donations = getTotal("donations"); echo $donations; ?></td></tr>
 		<tr><td><b>Total Expenditures (Committees): </b></td><td>$<?php $total = getTotal(); echo $total; ?> 

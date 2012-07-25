@@ -13,7 +13,16 @@ td, th {
 	padding: 2px;	
 }
 
-#budget-chart {
-	width: 500px;
-	height: 300px;
+.chart {
+	width: 390px;
+	height: 260px;	
+	border: 1px solid black;
+}
+
+#totals {
+
+}
+
+.clear {
+	clear: both;	
 }
