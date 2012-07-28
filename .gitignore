@@ -4,3 +4,4 @@
 .settings/*
 mysql_vars.php
 .DS_Store
+jquery-ui/*
