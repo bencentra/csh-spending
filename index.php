@@ -1,6 +1,6 @@
 <?php
 //Include constants and functions from 'lib.php'
-include('lib.php');
+require_once('lib.php');
 
 //Define some variables for budget totals/percents
 $total = 0;
@@ -10,7 +10,7 @@ $percent = 0;
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>CSH Spending - 2012</title>
+	<title>CSH Spending - 2013-14</title>
 	<link rel="stylesheet" type="text/css" href="style.css"/>
 	<link rel="stylesheet" type="text/css" href="jquery-ui/css/smoothness/jquery-ui-1.8.22.custom.css"/>
 	<script type="text/javascript" src="jquery-ui/js/jquery-1.7.2.min.js"></script>
@@ -46,7 +46,7 @@ $percent = 0;
 				['Accum', <?php echo round(YEARLY_TOTAL*BUDGET_ACCUM,2);?>]
       		]);
 			//Set the options for the totals chart
-      		var totalsOptions = {'title':'Budget Breakdown by Committee', 'width':375, 'height':300};
+      		var totalsOptions = {'title':'Budget Breakdown by Committee', 'width':350, 'height':250};
       		//Create a new chart
       		var totalsChart = new google.visualization.PieChart(document.getElementById('totals-chart'));
       		//Draw the chart
@@ -59,16 +59,16 @@ $percent = 0;
       		spendingData.addColumn('number', 'Budget');
       		//Add the data rows to the table
       		spendingData.addRows([
-				['OpComm', <?php echo round(getTotal('opcomm'),2); ?>],
-				['Evals', <?php echo round(getTotal('evals'),2); ?>],
-				['History', <?php echo round(getTotal('history'),2); ?>],
-				['Imps', <?php echo round(getTotal('imps'),2); ?>],
-				['R&D', <?php echo round(getTotal('randd'),2); ?>],
-				['Social', <?php echo round(getTotal('social'),2); ?>],
-				['Misc', <?php echo round(getTotal('misc'),2); ?>]
+				['OpComm', <?php echo round(getTotal(OPCOMM),2); ?>],
+				['Evals', <?php echo round(getTotal(EVALS),2); ?>],
+				['History', <?php echo round(getTotal(HISTORY),2); ?>],
+				['Imps', <?php echo round(getTotal(IMPS),2); ?>],
+				['R&D', <?php echo round(getTotal(RANDD),2); ?>],
+				['Social', <?php echo round(getTotal(SOCIAL),2); ?>],
+				['Misc', <?php echo round(getTotal(MISC),2); ?>]
       		]);
       		//Set the options for the spending chart
-      		var spendingOptions = {'title':'Spending Breakdown by Committee', 'width':375, 'height':300};
+      		var spendingOptions = {'title':'Spending Breakdown by Committee', 'width':350, 'height':250};
       		//Create a new chart
       		var spendingChart = new google.visualization.PieChart(document.getElementById('spending-chart'));
       		//Draw the chart
@@ -79,12 +79,12 @@ $percent = 0;
 <body>
 <div id="wrapper">
 	<header>
-		<h2>CSH Spending 2012-2013</h2>
+		<h2>CSH Spending 2013-14</h2>
+		<p><i>Misappropriating funds and marginalizing profits since 1976!</i></p>
 	</header>
 	<section id="charts"> 
 		<div id="totals-chart" class="chart"></div>
 		<div id="spending-chart" class="chart"></div>
-		<br class="clear"/>
 		<!-- <table>
 			<tr><td>Yearly On-Floor Dues: </td><td>$<?php //echo YEARLY_TOTAL;?></td></tr>
 			<tr><td>OpComm: </td><td>$<?php //echo round(YEARLY_TOTAL*BUDGET_OPCOMM);?></td></tr>
@@ -96,17 +96,6 @@ $percent = 0;
 			<tr><td>Misc: </td><td>$<?php //echo YEARLY_TOTAL*BUDGET_MISC;?></td></tr>
 			<tr><td>Accum (Rollover): </td><td>$<?php //echo YEARLY_TOTAL*BUDGET_ACCUM;?></td></tr>
 		</table> -->
-	</section>
-	<section id="totals">
-		<h2>Totals</h2>
-		<table>
-		<tr><td><b>Starting Budget <br/>(Yearly On-Floor Dues)</b></td><td>$<?php echo YEARLY_TOTAL;?></td></tr>
-		<tr><td><b>Total Donations <br/>(User Rack, Off-Floor Dues, etc.)</b></td><td>$<?php $donations = getTotal("donations"); echo $donations; ?></td></tr>
-		<tr><td><b>Total Expenditures <br/>(Committees)</b></td><td>$<?php $total = getTotal(); echo $total; ?> 
-		(<?php $percent = round(($total/YEARLY_TOTAL),2); echo $percent; ?>%)</td></tr>
-		<tr><td><b>Remaining Budget <br/>(Dues + Donations - Expenses)</b></td><td>$<?php $remaining = YEARLY_TOTAL-$total+$donations; echo $remaining;?>
-		(<?php $percent = 100 - round(($remaining/YEARLY_TOTAL),2); echo $percent;?>%)</td></tr>
-		</table>
 	</section>
 	<section id="spending">
 		<h2>Spending</h2>
@@ -120,53 +109,70 @@ $percent = 0;
 			<li><a href="#social">Social</a></li>
 			<li><a href="#misc">Misc</a></li>
 			<li><a href="#donations">Donations</a></li>
+			<li><a href="#totals">Totals</a>
 		</ul>
 		<div id="opcomm">
 			<h3>OpComm</h3>
-			<?php echo createTable("opcomm"); ?>
-			<b>Total Spent: </b>$<?php $total = getTotal("opcomm"); echo $total; ?><br/>
+			<?php echo createTable(OPCOMM); ?>
+			<b>Total Spent: </b>$<?php $total = getTotal(OPCOMM); echo $total; ?><br/>
+			<b>Total Allotted: </b>$<?php echo round(YEARLY_TOTAL*BUDGET_OPCOMM, 2); ?><br>
 			<b>Percentage Spent: </b><?php $percent = round(($total/(YEARLY_TOTAL*BUDGET_OPCOMM))*100,2); echo $percent; ?>%
 		</div>
 		<div id="evals">
 			<h3>Evals</h3>
-			<?php echo createTable("evals"); ?>
-			<b>Total Spent: </b>$<?php $total = getTotal("evals"); echo $total; ?><br/>
+			<?php echo createTable(EVALS); ?>
+			<b>Total Spent: </b>$<?php $total = getTotal(EVALS); echo $total; ?><br/>
+			<b>Total Allotted: </b>$<?php echo round(YEARLY_TOTAL*BUDGET_EVALS, 2); ?><br/>
 			<b>Percentage Spent: </b><?php $percent = round(($total/(YEARLY_TOTAL*BUDGET_EVALS))*100,2); echo $percent; ?>%
 		</div>
 		<div id="history">
 			<h3>History</h3>
-			<?php echo createTable("history"); ?>
-			<b>Total Spent: </b>$<?php $total = getTotal("history"); echo $total; ?><br/>
+			<?php echo createTable(HISTORY); ?>
+			<b>Total Spent: </b>$<?php $total = getTotal(HISTORY); echo $total; ?><br/>
+			<b>Total Allotted: </b>$<?php echo round(YEARLY_TOTAL*BUDGET_HISTORY, 2); ?><br/>
 			<b>Percentage Spent: </b><?php $percent = round(($total/(YEARLY_TOTAL*BUDGET_HISTORY))*100,2); echo $percent; ?>%
 		</div>
 		<div id="imps">
 			<h3>Imps</h3>
-			<?php echo createTable("imps"); ?>
-			<b>Total Spent: </b>$<?php $total = getTotal("imps"); echo $total; ?><br/>
+			<?php echo createTable(IMPS); ?>
+			<b>Total Spent: </b>$<?php $total = getTotal(IMPS); echo $total; ?><br/>
+			<b>Total Allotted: </b>$<?php echo round(YEARLY_TOTAL*BUDGET_IMPS, 2); ?><br/>
 			<b>Percentage Spent: </b><?php $percent = round(($total/(YEARLY_TOTAL*BUDGET_IMPS))*100,2); echo $percent; ?>%
 		</div>
 		<div id="randd">
 			<h3>R&amp;D</h3>
-			<?php echo createTable("randd"); ?>
-			<b>Total Spent: </b>$<?php $total = getTotal("randd"); echo $total; ?><br/>
+			<?php echo createTable(RANDD); ?>
+			<b>Total Spent: </b>$<?php $total = getTotal(RANDD); echo $total; ?><br/>
+			<b>Total Allotted: </b>$<?php echo round(YEARLY_TOTAL*BUDGET_RANDD, 2); ?><br/>
 			<b>Percentage Spent: </b><?php $percent = round(($total/(YEARLY_TOTAL*BUDGET_RANDD))*100,2); echo $percent; ?>%
 		</div>
 		<div id="social">
 			<h3>Social</h3>
-			<?php echo createTable("social"); ?>
-			<b>Total Spent: </b>$<?php $total = getTotal("social"); echo $total; ?><br/>
+			<?php echo createTable(SOCIAL); ?>
+			<b>Total Spent: </b>$<?php $total = getTotal(SOCIAL); echo $total; ?><br/>
+			<b>Total Allotted: </b>$<?php echo round(YEARLY_TOTAL*BUDGET_SOCIAL, 2); ?><br/>
 			<b>Percentage Spent: </b><?php $percent = round(($total/(YEARLY_TOTAL*BUDGET_SOCIAL))*100,2); echo $percent; ?>%
 		</div>
 		<div id="misc">
 			<h3>Misc</h3>
-			<?php echo createTable("misc"); ?>
-			<b>Total Spent: </b>$<?php $total = getTotal("misc"); echo $total; ?><br/>
-			<b>Percentage Spent: </b><?php $percent = round(($total/(YEARLY_TOTAL*BUDGET_MISC))*100,2); echo $percent; ?>%
+			<?php echo createTable(ACCUM); ?>
+			<b>Total Spent: </b>$<?php $total = getTotal(ACCUM); echo $total; ?><br/>
 		</div>
 		<div id="donations">
 			<h3>Donations</h3>
-			<?php echo createTable("donations"); ?>
-			<b>Total Donations: </b>$<?php $total = getTotal("donations"); echo $total; ?><br/>
+			<?php echo createTable(DONATIONS); ?>
+			<b>Total Donations: </b>$<?php $total = getTotal(DONATIONS); echo $total; ?><br/>
+		</div>
+		<div id="totals">
+			<h3>Totals</h3>
+			<table>
+			<tr><td><b>Starting Budget (Yearly On-Floor Dues)</b></td><td>$<?php echo YEARLY_TOTAL;?></td></tr>
+			<tr><td><b>Total Donations (User Rack, Off-Floor Dues, etc.)</b></td><td>$<?php $donations = getTotal(DONATIONS); echo $donations; ?></td></tr>
+			<tr><td><b>Total Expenditures (Committees)</b></td><td>$<?php $total = getTotal(); echo $total; ?> 
+			</td></tr>
+			<tr><td><b>Remaining Budget (Dues + Donations - Expenses)</b></td><td>$<?php $remaining = YEARLY_TOTAL-$total+$donations; echo $remaining;?>
+			</td></tr>
+			</table>
 		</div>
 		</div>
 	</section>

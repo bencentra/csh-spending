@@ -5,15 +5,28 @@ require_once("mysql_vars.php");
 /**
  * Budget-related constants
  */
-define(YEARLY_TOTAL,5670);
-define(BUDGET_OPCOMM,.19);
-define(BUDGET_EVALS,.04);
-define(BUDGET_HISTORY,.09);
-define(BUDGET_IMPS,.09);
-define(BUDGET_RANDD,.19);
-define(BUDGET_SOCIAL,.25);
-define(BUDGET_MISC,.05);
-define(BUDGET_ACCUM,.10);
+define("YEARLY_TOTAL",5544);
+define("BUDGET_OPCOMM",.2);
+define("BUDGET_EVALS",.05);
+define("BUDGET_HISTORY",.10);
+define("BUDGET_IMPS",.15);
+define("BUDGET_RANDD",.2);
+define("BUDGET_SOCIAL",.20);
+define("BUDGET_MISC",0);
+define("BUDGET_ACCUM",.10);
+
+/**
+* Committte name constants
+*/
+define("OPCOMM", "OpComm");
+define("EVALS", "Eval");
+define("HISTORY", "History");
+define("IMPS", "Imps");
+define("RANDD", "R&D");
+define("SOCIAL", "Social");
+define("MISC", "Misc1");
+define("ACCUM", "Misc");
+define("DONATIONS", "Donation");
 
 /**
  * getMysqliConnection() - Get a fresh mysqli connection object

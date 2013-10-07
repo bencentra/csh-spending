@@ -22,26 +22,26 @@ td, th {
 }
 
 #charts {
-	width: 750px; 
-	margin: auto;	
+	width: 350px; 
+	float: left;
 }	
 
 .chart {
-	width: 375px;
-	height: 300px;	
-	float: left;
+	width: 350px;
+	height: 250px;	
+	/*float: left;*/
 }
 
 #totals {
-	width: 395px;
+	/*width: 395px;
 	float: left;
-	font-size: .85em;
+	font-size: .8em;*/
 }
 
 #spending {
-	width: 595px;
+	width: 640px;
 	float: right;
-	font-size: .85em;
+	font-size: .8em;
 }
 
 #tabs {
@@ -54,6 +54,5 @@ td, th {
 
 footer {
 	clear: both;
-	padding: 1px;
 	text-align: center;
 }
