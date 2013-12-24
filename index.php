@@ -10,7 +10,7 @@ $percent = 0;
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>CSH Spending - 2013-14</title>
+	<title>CSH Spending</title>
 	<link rel="stylesheet" type="text/css" href="style.css"/>
 	<link rel="stylesheet" type="text/css" href="jquery-ui/css/smoothness/jquery-ui-1.8.22.custom.css"/>
 	<script type="text/javascript" src="jquery-ui/js/jquery-1.7.2.min.js"></script>
@@ -79,7 +79,7 @@ $percent = 0;
 <body>
 <div id="wrapper">
 	<header>
-		<h2>CSH Spending 2013-14</h2>
+		<h2>CSH Spending <?php echo (isset($_GET["year"])) ? $_GET["year"] : "2013"; ?></h2>
 		<p><i>Misappropriating funds and marginalizing profits since 1976!</i></p>
 		<p>Select Year: 
 			<a href="https://members.csh.rit.edu/~geoff/financial/">2010</a>
