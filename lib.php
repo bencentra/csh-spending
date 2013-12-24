@@ -1,6 +1,6 @@
 <?php
 
-require_once("mysql_vars.php");
+require_once("./mysql_vars.php");
 
 /**
  * Budget-related constants
@@ -26,7 +26,7 @@ define("RANDD", "R&D");
 define("SOCIAL", "Social");
 define("MISC", "Misc1");
 define("ACCUM", "Misc");
-define("DONATIONS", "Donation");
+define("DONATIONS", "Donations");
 
 /**
  * getMysqliConnection() - Get a fresh mysqli connection object

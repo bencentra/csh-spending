@@ -81,6 +81,12 @@ $percent = 0;
 	<header>
 		<h2>CSH Spending 2013-14</h2>
 		<p><i>Misappropriating funds and marginalizing profits since 1976!</i></p>
+		<p>Select Year: 
+			<a href="https://members.csh.rit.edu/~geoff/financial/">2010</a>
+			<a href="index.php?year=2011">2011</a>
+			<a href="index.php?year=2012">2012</a>
+			<a href="index.php?year=2013">2013</a>
+		</p>
 	</header>
 	<section id="charts"> 
 		<div id="totals-chart" class="chart"></div>
